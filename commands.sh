@@ -4,6 +4,7 @@ hadoop_dir=$HADOOP_HOME
 if ! [ -d input ]
 then
 echo "Make input directory with files"
+exit 1
 fi
 if ! [ -d output ]
 then
@@ -11,9 +12,15 @@ mkdir output
 else
 rm -r output
 fi
+if [ -z $hadoop_dir ]
+then
+echo "Set valid env variable HADOOP_HOME"
+exit 1
+fi
 if ! [ -d $hadoop_dir ]
 then
 echo "Set valid env variable HADOOP_HOME"
+exit 1
 fi
    $hadoop_dir/bin/hdfs namenode -format
    #starting hadoop in pseudo-distributed mode
